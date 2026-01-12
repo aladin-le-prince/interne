@@ -1,0 +1,237 @@
+/* stylesheet.css */
+
+/* Fond et typographie */
+body.app-body {
+    background-color: #4b7d60; /* doux, neutre */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+}
+
+/* Conteneur principal */
+.app-container {
+    max-width: 1200px; /* largeur max pour desktop */
+    padding: 20px;
+}
+
+/* Card ou section de contenu */
+.card {
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    margin: 15px 0;
+    padding: 20px;
+    background-color: #fff;
+}
+
+/* Footer */
+.app-footer {
+    background-color: #e0e0e0;
+    padding: 10px 0;
+}
+
+/* Responsive pour mobile/tablette */
+@media (max-width: 768px) {
+    .app-container {
+        padding: 15px;
+    }
+    .card {
+        padding: 15px;
+    }
+}
+
+/* Cards futuristes pour Dashboard */
+.card {
+    border-radius: 15px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    background: linear-gradient(145deg, #5d797b, #405260);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+/* Badges améliorés */
+.badge {
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+/* Task cards futuristes */
+.task-card {
+    background: linear-gradient(145deg, #e6f0ff, #535b64);
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.task-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+/* Task detail card futuriste */
+.task-card {
+    background: linear-gradient(145deg, #e6f0ff, #576271);
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.task-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+/* Report create card futuriste */
+.report-card {
+    background: linear-gradient(135deg, #f0f7ff, #4e5863);
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.report-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+/* Cards pour rapports, style futuriste */
+.report-card {
+    background: linear-gradient(135deg, #e6f0ff, #3c4d63);
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.report-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+
+/* Cards pour rapports archivés, futuriste */
+.report-card {
+    background: linear-gradient(135deg, #f0f0f5, #454568);
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.report-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+}
+
+/* Table journal audit */
+.table-hover tbody tr:hover {
+    background-color: #097260;
+}
+/* Cards tableau de bord */
+.dashboard-card {
+    background: linear-gradient(145deg, #e0e0f7, #43485b);
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+}
+
+/* Badges futuristes */
+.badge {
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+/* Cards rapport */
+.report-card {
+    background: linear-gradient(135deg, #eef2fb, #474f5e);
+    border-radius: 12px;
+    box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.report-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+}
+
+/* Boutons PDF ou archiver */
+.btn-outline-danger, .btn-warning {
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+
+/* Create Technician Card */
+.create-card {
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    background-color: #fff;
+}
+
+/* DASHBOARD MOBILE FIRST */
+.dashboard-mobile {
+    padding: 10px;
+}
+
+/* Stats compactes */
+.stat-card {
+    padding: 12px;
+    text-align: center;
+    border-radius: 14px;
+}
+.stat-card i {
+    font-size: 1.4rem;
+    margin-bottom: 4px;
+}
+.stat-card h5 {
+    margin: 4px 0;
+    font-weight: 700;
+}
+
+/* Cartes compactes */
+.compact-card .card-body {
+    padding: 10px;
+}
+
+.task-mini-card {
+    background: linear-gradient(145deg, #f5f8ff, #3a3f4f);
+    border-radius: 12px;
+    padding: 10px;
+    height: 100%;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+}
+
+/* Listes compactes */
+.compact-list .list-group-item {
+    padding: 10px;
+}
+
+/* Mobile optimisation */
+@media (max-width: 768px) {
+    .stat-card small {
+        font-size: 0.75rem;
+    }
+    .task-mini-card {
+        font-size: 0.9rem;
+    }
+}
+/* Stats transformés en boutons */
+.stat-btn {
+    background: linear-gradient(145deg, #e0e0f7, #373b4a);
+    border-radius: 12px;
+    padding: 15px;
+    color: #000;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.stat-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+.stat-btn i {
+    font-size: 1.5rem;
+}

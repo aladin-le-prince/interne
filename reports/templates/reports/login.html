@@ -1,0 +1,37 @@
+{% extends 'reports/base.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-center align-items-center" style="min-height: 70vh;">
+    <div class="card p-4" style="max-width: 400px; width: 100%; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+        <h3 class="text-center mb-4"><i class="bi bi-person-circle me-1"></i>Connexion Technicien</h3>
+
+        <form method="post" action="{% url 'login' %}">
+            {% csrf_token %}
+
+            <!-- Nom d'utilisateur -->
+            <div class="mb-3 input-group">
+                <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
+                <input type="text" name="username" class="form-control" placeholder="Nom d'utilisateur" required>
+            </div>
+
+            <!-- Mot de passe -->
+            <div class="mb-3 input-group">
+                <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+                <input type="password" name="password" class="form-control" placeholder="Mot de passe" required>
+            </div>
+
+            <!-- Bouton de connexion -->
+            <button type="submit" class="btn btn-success w-100">
+                <i class="bi bi-box-arrow-in-right me-1"></i> Se connecter
+            </button>
+        </form>
+        
+        <!-- Optionnel : message d'erreur -->
+        {% if form.errors %}
+        <div class="alert alert-danger mt-3" role="alert">
+            Nom d'utilisateur ou mot de passe incorrect
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

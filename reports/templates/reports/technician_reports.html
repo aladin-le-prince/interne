@@ -1,0 +1,39 @@
+{% extends "reports/base.html" %}
+{% load static %}
+
+{% block content %}
+<h2 class="mb-4 text-center">Rapports de {{ technician.user.username }}</h2>
+
+<!-- Bouton retour Dashboard -->
+<div class="mb-3">
+    <a href="{% url 'dashboard' %}" class="btn btn-outline-secondary btn-sm">
+        <i class="bi bi-arrow-left-circle"></i> Retour au Dashboard
+    </a>
+</div>
+
+{% if reports %}
+<div class="row g-3">
+    {% for report in reports %}
+    <div class="col-12 col-md-6 col-xl-4">
+        <div class="report-card p-3">
+            <h5>{{ report.task.title }}</h5>
+            <p class="mb-1"><small class="text-muted"><i class="bi bi-calendar"></i> {{ report.created_at|date:"d/m/Y H:i" }}</small></p>
+
+            <div class="mt-2 d-flex gap-2 justify-content-end flex-wrap">
+                <a href="{% url 'report_detail' report.id %}" class="btn btn-outline-primary btn-sm">
+                    <i class="bi bi-eye"></i> Voir
+                </a>
+                <a href="{% url 'report_pdf' report.id %}" class="btn btn-outline-secondary btn-sm">
+                    <i class="bi bi-file-earmark-pdf"></i> PDF
+                </a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="report-card p-3 text-center text-muted">
+    Aucun rapport.
+</div>
+{% endif %}
+{% endblock %}

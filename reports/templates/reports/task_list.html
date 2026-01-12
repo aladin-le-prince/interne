@@ -1,0 +1,78 @@
+{% extends 'reports/base.html' %}
+{% load static %}
+
+{% block content %}
+<h2 class="mb-4 text-center">Liste des tâches</h2>
+
+<!-- Bouton retour Dashboard -->
+<div class="mb-3">
+    <a href="{% url 'dashboard' %}" class="btn btn-outline-secondary btn-sm">
+        <i class="bi bi-arrow-left-circle"></i> Retour au Dashboard
+    </a>
+
+    {% if is_superadmin or is_supervisor %}
+    <a href="{% url 'task_create' %}" class="btn btn-primary btn-sm ms-2">
+        <i class="bi bi-plus-circle"></i> Créer tâche
+    </a>
+    {% endif %}
+</div>
+
+<!-- Filtrage -->
+<form method="get" class="mb-3 row g-2 align-items-center">
+    <div class="col-auto">
+        <select name="status" class="form-select">
+            <option value="">-- Tous les statuts --</option>
+            <option value="done" {% if request.GET.status == "done" %}selected{% endif %}>Terminée</option>
+            <option value="pending" {% if request.GET.status == "pending" %}selected{% endif %}>En attente</option>
+        </select>
+    </div>
+    <div class="col-auto">
+        <button class="btn btn-primary btn-sm"><i class="bi bi-filter"></i> Filtrer</button>
+    </div>
+</form>
+
+<!-- Liste des tâches -->
+<div class="row g-3">
+    {% for task in tasks %}
+    <div class="col-12 col-md-6 col-xl-4">
+        <div class="task-card p-3">
+            <h5>{{ task.title }}</h5>
+            <p class="mb-1">{{ task.description|truncatechars:80 }}</p>
+            <p class="mb-1"><strong>Localisation:</strong> {{ task.location }}</p>
+
+            <span class="badge {% if task.status == 'COMPLETED' %}bg-success{% else %}bg-warning text-dark{% endif %}">
+                {{ task.status }}
+            </span>
+
+            <div class="mt-2 d-flex flex-wrap gap-2 justify-content-end">
+                <a href="{% url 'task_detail' task.id %}" class="btn btn-outline-primary btn-sm">
+                    <i class="bi bi-eye"></i> Voir détail
+                </a>
+                {% if not task.is_completed %}
+                <a href="{% url 'report_create' task.id %}" class="btn btn-primary btn-sm">
+                    <i class="bi bi-pencil-square"></i> Faire un rapport
+                </a>
+                {% endif %}
+                {% if is_superadmin or is_supervisor %}
+                <a href="{% url 'assign_task' task.id %}" class="btn btn-success btn-sm">
+                    <i class="bi bi-person-plus"></i> Assigner
+                </a>
+                {% endif %}
+            </div>
+
+            {% if task.estimated_duration %}
+            <div class="mt-1">
+                <small class="text-muted"><i class="bi bi-hourglass-split"></i> Estimation : {{ task.estimated_duration }}</small>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12">
+        <div class="task-card p-3 text-center text-muted">
+            Aucune tâche trouvée.
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,78 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Rapport Technique</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+            margin: 20px;
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #0d6efd;
+        }
+        .section {
+            margin-top: 15px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .section + .section {
+            margin-top: 20px;
+        }
+        .label {
+            font-weight: bold;
+            color: #0d6efd;
+        }
+        p {
+            margin: 5px 0;
+        }
+        .content-box {
+            margin-top: 5px;
+            padding: 8px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>RAPPORT TECHNIQUE</h1>
+
+<div class="section">
+    <p><span class="label">Tâche :</span> {{ report.task.title }}</p>
+    <p><span class="label">Technicien :</span> {{ report.author.user.username }}</p>
+    <p><span class="label">Date :</span> {{ report.created_at|date:"d/m/Y H:i" }}</p>
+</div>
+
+<div class="section">
+    <p class="label">Travail effectué :</p>
+    <div class="content-box">
+        {{ report.work_done }}
+    </div>
+</div>
+
+<div class="section">
+    <p class="label">Observations :</p>
+    <div class="content-box">
+        {{ report.observations }}
+    </div>
+</div>
+
+{% if report.photo %}
+<div class="section">
+    <p class="label">Photo :</p>
+    <div class="content-box">
+        <img src="{{ report.photo.url }}" alt="Photo tâche" style="max-width:100%; height:auto; border-radius:4px;">
+    </div>
+</div>
+{% endif %}
+
+</body>
+</html>

@@ -1,0 +1,50 @@
+{% extends 'reports/base.html' %}
+
+{% block content %}
+<h2 class="mb-4 text-center">Détail du rapport</h2>
+
+<!-- Boutons retour -->
+<div class="mb-3 d-flex flex-wrap justify-content-between gap-2">
+    <a href="{% url 'dashboard' %}" class="btn btn-outline-secondary btn-sm">
+        <i class="bi bi-arrow-left"></i> Retour au Dashboard
+    </a>
+    {% if is_supervisor %}
+    <a href="{% url 'report_list' %}" class="btn btn-outline-secondary btn-sm">
+        <i class="bi bi-list-ul"></i> Liste des rapports
+    </a>
+    {% endif %}
+</div>
+
+<div class="card report-card p-3">
+    <h5 class="mb-2">{{ report.task.title }}</h5>
+    <p class="mb-1"><strong>Technicien :</strong> {{ report.author.user.username }}</p>
+    <p class="mb-1"><strong>Date :</strong> {{ report.created_at|date:"d/m/Y H:i" }}</p>
+    <hr>
+    <p class="mb-1"><strong>Travail effectué :</strong></p>
+    <p class="mb-2">{{ report.work_done }}</p>
+    <p class="mb-1"><strong>Observations :</strong></p>
+    <p>{{ report.observations }}</p>
+
+    {% if report.photo %}
+    <img src="{{ report.photo.url }}" class="img-fluid mt-3 rounded" alt="Photo du rapport">
+    {% endif %}
+
+    <div class="mt-3 d-flex flex-wrap gap-2 align-items-center">
+        {% if report.is_locked %}
+            <span class="badge bg-success">Rapport verrouillé</span>
+        {% else %}
+            <span class="badge bg-warning text-dark">Rapport modifiable</span>
+        {% endif %}
+
+        {% if is_supervisor and report.is_locked and not report.is_archived %}
+            <a href="{% url 'archive_report' report.id %}" class="btn btn-warning btn-sm">
+                <i class="bi bi-archive"></i> Archiver
+            </a>
+        {% endif %}
+
+        <a href="{% url 'report_pdf' report.id %}" class="btn btn-outline-danger btn-sm">
+            <i class="bi bi-file-earmark-pdf"></i> Télécharger PDF
+        </a>
+    </div>
+</div>
+{% endblock %}

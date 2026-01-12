@@ -1,0 +1,23 @@
+{% extends "reports/base.html" %}
+
+{% block content %}
+<div class="d-flex justify-content-center mt-5">
+    <div class="card p-4 text-center" style="max-width: 500px; width: 100%; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+        <h3 class="mb-4 text-danger"><i class="bi bi-exclamation-triangle-fill me-1"></i>Supprimer {{ technician.user.username }}</h3>
+
+        <p class="mb-4">⚠️ Cette action est <strong>irréversible</strong>. Êtes-vous sûr de vouloir continuer ?</p>
+
+        <form method="post">
+            {% csrf_token %}
+            <div class="d-flex justify-content-between">
+                <a href="{% url 'dashboard' %}" class="btn btn-outline-secondary">
+                    <i class="bi bi-arrow-left-circle me-1"></i>Annuler
+                </a>
+                <button type="submit" class="btn btn-danger">
+                    <i class="bi bi-trash me-1"></i>Confirmer suppression
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

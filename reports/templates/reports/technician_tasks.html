@@ -1,0 +1,52 @@
+{% extends "reports/base.html" %}
+{% load static %}
+
+{% block content %}
+<h2 class="mb-4 text-center">Tâches de {{ technician.user.username }}</h2>
+
+<!-- Bouton retour Dashboard -->
+<div class="mb-3">
+    <a href="{% url 'dashboard' %}" class="btn btn-outline-secondary btn-sm">
+        <i class="bi bi-arrow-left-circle"></i> Retour au Dashboard
+    </a>
+</div>
+
+{% if tasks %}
+<div class="row g-3">
+    {% for task in tasks %}
+    <div class="col-12 col-md-6 col-xl-4">
+        <div class="task-card p-3">
+            <h5>{{ task.title }}</h5>
+            <p class="mb-1">{{ task.description|truncatechars:80 }}</p>
+            <p class="mb-1"><strong>Localisation :</strong> {{ task.location }}</p>
+            
+            <span class="badge {% if task.is_completed %}bg-success{% else %}bg-warning text-dark{% endif %}">
+                {% if task.is_completed %}✅ Terminée{% else %}⏳ En cours{% endif %}
+            </span>
+
+            <div class="mt-2 d-flex gap-2 justify-content-end flex-wrap">
+                <a href="{% url 'task_detail' task.id %}" class="btn btn-outline-primary btn-sm">
+                    <i class="bi bi-eye"></i> Voir détail
+                </a>
+                {% if not task.is_completed %}
+                <a href="{% url 'report_create' task.id %}" class="btn btn-primary btn-sm">
+                    <i class="bi bi-pencil-square"></i> Faire un rapport
+                </a>
+                {% endif %}
+            </div>
+
+            {% if task.estimated_duration %}
+            <div class="mt-1">
+                <small class="text-muted"><i class="bi bi-hourglass-split"></i> Estimation : {{ task.estimated_duration }}</small>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="task-card p-3 text-center text-muted">
+    Aucune tâche assignée.
+</div>
+{% endif %}
+{% endblock %}

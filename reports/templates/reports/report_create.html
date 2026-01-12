@@ -1,0 +1,46 @@
+{% extends 'reports/base.html' %}
+
+{% block content %}
+<h2 class="mb-4 text-center">Rapport pour {{ task.title }}</h2>
+
+<!-- Bouton retour -->
+<div class="mb-3">
+    <a href="{% url 'task_detail' task.id %}" class="btn btn-outline-secondary btn-sm">
+        <i class="bi bi-arrow-left"></i> Retour à la tâche
+    </a>
+</div>
+
+<div class="card report-card p-3 mx-auto" style="max-width: 600px;">
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="mb-3">
+            <label class="form-label"><i class="bi bi-pencil-square me-1"></i>Travail effectué</label>
+            <textarea name="work_done" class="form-control" rows="4" placeholder="Travail effectué" required></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label"><i class="bi bi-eye-fill me-1"></i>Observations</label>
+            <textarea name="observations" class="form-control" rows="3" placeholder="Observations"></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label"><i class="bi bi-camera-fill me-1"></i>Photo de preuve</label>
+            <input type="file" name="photo" class="form-control">
+        </div>
+
+        {% if error %}
+            <div class="alert alert-danger mt-2">{{ error }}</div>
+        {% endif %}
+
+        <div class="d-flex justify-content-between">
+            <a href="{% url 'task_detail' task.id %}" class="btn btn-outline-secondary">
+                <i class="bi bi-x-circle"></i> Annuler
+            </a>
+            <button type="submit" class="btn btn-primary">
+                <i class="bi bi-send-fill"></i> Envoyer
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}

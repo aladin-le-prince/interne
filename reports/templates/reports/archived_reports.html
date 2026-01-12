@@ -1,0 +1,41 @@
+{% extends 'reports/base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+
+    <h3 class="mb-4 text-center">
+        <i class="bi bi-archive me-1"></i> Rapports archivés
+    </h3>
+
+    <!-- Bouton retour Liste rapports -->
+    <div class="mb-3 text-start">
+        <a href="{% url 'report_list' %}" class="btn btn-outline-secondary btn-sm">
+            <i class="bi bi-arrow-left-circle me-1"></i> Retour à la liste des rapports
+        </a>
+    </div>
+
+    <div class="row">
+        {% for report in reports %}
+        <div class="col-md-6 mb-3">
+            <div class="card report-card p-3 h-100">
+                <h5>{{ report.task.title }}</h5>
+                <p><strong>Technicien :</strong> {{ report.technician }}</p>
+                <p><strong>Date :</strong> {{ report.created_at|date:"d/m/Y H:i" }}</p>
+                <div class="text-end mt-2">
+                    <a href="{% url 'report_pdf' report.id %}" class="btn btn-outline-danger btn-sm">
+                        <i class="bi bi-file-earmark-pdf me-1"></i> PDF
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <div class="card p-3 text-center">
+                <i class="bi bi-info-circle me-1"></i> Aucun rapport archivé.
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,142 @@
+{% extends 'reports/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container-fluid dashboard-mobile">
+
+    <!-- HEADER + CRÉER TÂCHE -->
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-3 gap-2">
+        <div class="text-center text-md-start">
+            <h4 class="fw-bold mb-1">Tableau de bord</h4>
+            {% if role == 'SUPERADMIN' %}
+                <span class="badge bg-primary">Superviseur Admin</span>
+            {% elif role == 'SUPERVISOR' %}
+                <span class="badge bg-danger">Centre de contrôle</span>
+            {% else %}
+                <span class="badge bg-success">Technicien</span>
+            {% endif %}
+        </div>
+
+        <!-- Bouton créer tâche -->
+        {% if is_superadmin or is_supervisor %}
+        <a href="{% url 'task_create' %}" class="btn btn-sm btn-primary">
+            <i class="bi bi-plus-circle me-1"></i>Créer tâche
+        </a>
+        {% endif %}
+    </div>
+
+    <!-- STATS (BOUTONS) -->
+    <div class="row g-2 mb-3 text-center stats-row">
+        <div class="col-6 col-md-3">
+            <a href="{% url 'task_list' %}" class="btn stat-btn w-100 d-flex flex-column align-items-center">
+                <i class="bi bi-list-task fs-3 mb-1"></i>
+                <span>{{ tasks|length }}</span>
+                <small>Tâches</small>
+            </a>
+        </div>
+
+        <div class="col-6 col-md-3">
+            <a href="{% url 'report_list' %}" class="btn stat-btn w-100 d-flex flex-column align-items-center">
+                <i class="bi bi-file-earmark-text fs-3 mb-1"></i>
+                <span>{{ reports|length }}</span>
+                <small>Rapports</small>
+            </a>
+        </div>
+
+        {% if is_superadmin or is_supervisor %}
+        <div class="col-6 col-md-3">
+            <a href="#" class="btn stat-btn w-100 d-flex flex-column align-items-center">
+                <i class="bi bi-people fs-3 mb-1"></i>
+                <span>{{ technicians|length }}</span>
+                <small>Techniciens</small>
+            </a>
+        </div>
+        {% endif %}
+
+        <div class="col-6 col-md-3">
+            <a href="#" class="btn stat-btn w-100 d-flex flex-column align-items-center">
+                <i class="bi bi-clock-history fs-3 mb-1"></i>
+                <span>{{ tasks|length }}</span>
+                <small>Estimations</small>
+            </a>
+        </div>
+    </div>
+
+    <!-- TÂCHES -->
+    <div class="card dashboard-card compact-card mb-3">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <span><i class="bi bi-kanban me-1"></i> Tâches</span>
+            <a href="{% url 'task_list' %}" class="btn btn-sm btn-outline-secondary">Tout voir</a>
+        </div>
+
+        <div class="card-body p-2">
+            <div class="row g-2">
+                {% for task in tasks %}
+                <div class="col-12 col-md-6 col-xl-4">
+                    <div class="task-mini-card d-flex flex-column justify-content-between p-2">
+                        <div>
+                            <strong>{{ task.title }}</strong><br>
+                            <small class="text-muted"><i class="bi bi-geo-alt"></i> {{ task.location }}</small>
+                        </div>
+
+                        <div class="d-flex justify-content-between align-items-center mt-2">
+                            <span class="badge bg-secondary">{{ task.status }}</span>
+                            <div class="btn-group btn-group-sm">
+                                <a href="{% url 'task_detail' task.id %}" class="btn btn-outline-secondary" title="Détails">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+                                <a href="{% url 'report_create' task.id %}" class="btn btn-primary" title="Faire rapport">
+                                    <i class="bi bi-pencil-square"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        {% if task.estimated_duration %}
+                        <div class="mt-1">
+                            <small class="text-muted"><i class="bi bi-hourglass-split"></i> Estimation : {{ task.estimated_duration }}</small>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% empty %}
+                <div class="text-center text-muted py-3">Aucune tâche</div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!-- RAPPORTS -->
+    <div class="card dashboard-card compact-card mb-3">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <span><i class="bi bi-journal-text me-1"></i> Rapports</span>
+            <a href="{% url 'report_list' %}" class="btn btn-sm btn-outline-secondary">Tout voir</a>
+        </div>
+
+        <ul class="list-group list-group-flush compact-list">
+            {% for report in reports|slice:":4" %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <div>
+                    <strong>{{ report.task.title }}</strong><br>
+                    <small class="text-muted">{{ report.created_at|date:"d/m/Y H:i" }}</small>
+                </div>
+                <a href="{% url 'report_detail' report.id %}" class="btn btn-sm btn-outline-primary">
+                    <i class="bi bi-eye"></i>
+                </a>
+            </li>
+            {% empty %}
+            <li class="list-group-item text-center text-muted">Aucun rapport</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <!-- AUDIT -->
+    {% if is_superadmin or is_supervisor %}
+    <div class="text-center mb-3">
+        <a href="{% url 'audit_log' %}" class="btn btn-outline-info btn-sm">
+            <i class="bi bi-shield-check"></i> Journal d’activité
+        </a>
+    </div>
+    {% endif %}
+
+</div>
+{% endblock %}

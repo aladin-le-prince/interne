@@ -1,0 +1,42 @@
+{% extends 'reports/base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+
+    <h3 class="mb-4 text-center"><i class="bi bi-shield-check me-1"></i>Journal des actions</h3>
+
+    <!-- Bouton retour Dashboard -->
+    <div class="mb-3 text-start">
+        <a href="{% url 'dashboard' %}" class="btn btn-outline-secondary btn-sm">
+            <i class="bi bi-arrow-left-circle me-1"></i>Retour au Dashboard
+        </a>
+    </div>
+
+    <div class="table-responsive card p-3 shadow-sm">
+        <table class="table table-hover align-middle mb-0">
+            <thead class="table-dark">
+                <tr>
+                    <th>Date</th>
+                    <th>Utilisateur</th>
+                    <th>Action</th>
+                    <th>Objet</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for log in logs %}
+                <tr>
+                    <td>{{ log.timestamp|date:"d/m/Y H:i" }}</td>
+                    <td>{{ log.user }}</td>
+                    <td>{{ log.action }}</td>
+                    <td>{{ log.object_type }} #{{ log.object_id }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" class="text-center text-muted">Aucune action enregistrée</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

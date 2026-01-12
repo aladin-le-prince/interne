@@ -1,0 +1,43 @@
+{% extends 'reports/base.html' %}
+{% load static %}
+
+{% block content %}
+<h2 class="mb-4 text-center">Détail de la tâche</h2>
+
+<div class="mb-3 d-flex flex-wrap gap-2">
+    <a href="{% url 'task_list' %}" class="btn btn-outline-secondary btn-sm">
+        <i class="bi bi-arrow-left-circle"></i> Retour à la liste
+    </a>
+    {% if is_superadmin or is_supervisor %}
+    <a href="{% url 'assign_task' task.id %}" class="btn btn-success btn-sm">
+        <i class="bi bi-person-plus"></i> Assigner
+    </a>
+    {% endif %}
+    {% if not task.is_completed %}
+    <a href="{% url 'report_create' task.id %}" class="btn btn-primary btn-sm">
+        <i class="bi bi-pencil-square"></i> Faire un rapport
+    </a>
+    {% endif %}
+</div>
+
+<div class="task-card p-4">
+    <h4>{{ task.title }}</h4>
+    <p class="mb-2"><strong>Description :</strong> {{ task.description }}</p>
+    <p class="mb-2"><strong>Localisation :</strong> {{ task.location }}</p>
+    <p class="mb-2"><strong>Assignée à :</strong>
+        {% for assign in task.taskassignment_set.all %}
+            {{ assign.technician.user.username }}{% if not forloop.last %}, {% endif %}
+        {% empty %}
+            Aucun
+        {% endfor %}
+    </p>
+
+    <p>
+        {% if task.status == 'COMPLETED' %}
+            <span class="badge bg-success">Terminée</span>
+        {% else %}
+            <span class="badge bg-warning text-dark">En attente</span>
+        {% endif %}
+    </p>
+</div>
+{% endblock %}
