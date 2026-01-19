@@ -331,7 +331,7 @@ def report_list(request):
 
     paginator = Paginator(Report.objects.order_by('-created_at'), 10)
     page_obj = paginator.get_page(request.GET.get('page'))
-    return render(request, 'reports/report_list.html', {'page_obj': page_obj})
+    return render(request, 'new-design/report_list.html', {'page_obj': page_obj})
 
 
 @login_required
@@ -393,4 +393,4 @@ def audit_log_list(request):
         return HttpResponseForbidden()
 
     logs = AuditLog.objects.order_by('-timestamp')[:500]
-    return render(request, 'reports/audit_log_list.html', {'logs': logs})
+    return render(request, 'new-design/audit_log_list.html', {'logs': logs})
