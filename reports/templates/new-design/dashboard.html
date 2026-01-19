@@ -1,0 +1,106 @@
+{% extends "new-design/base.html" %}
+
+{% block content %}
+
+<!-- [ Main Content ] start -->
+  <div class="pc-container">
+    <div class="pc-content">
+      <!-- [ breadcrumb ] start -->
+      <div class="page-header">
+        <div class="page-block">
+          <div class="row align-items-center">
+            <div class="col-md-12">
+              <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url "dashboard" %}">Tableau de bord</a></li>
+                <li class="breadcrumb-item" aria-current="page">Accueil</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- [ breadcrumb ] end -->
+      <!-- [ Main Content ] start -->
+      <div class="row">
+        <!-- [ sample-page ] start -->
+         {% if is_superadmin or is_supervisor %}
+            <div class="col-md-6 col-xl-3">
+            <div class="card">
+                <div class="card-body">
+                <h6 class="mb-2 f-w-400 text-muted">Total de techniciens</h6>
+                <h4 class="mb-3">{{ technicians|length }}</h4>
+                </div>
+            </div>
+            </div>
+         {% endif %}
+        <div class="col-md-6 col-xl-3">
+          <div class="card">
+            <div class="card-body">
+              <h6 class="mb-2 f-w-400 text-muted">Total de tâches</h6>
+              <h4 class="mb-3">{{ tasks|length }}</h4>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-xl-3">
+          <div class="card">
+            <div class="card-body">
+              <h6 class="mb-2 f-w-400 text-muted">Total de rapports</h6>
+              <h4 class="mb-3">{{ reports|length }}</h4>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-xl-3">
+          <div class="card">
+            <div class="card-body">
+              <h6 class="mb-2 f-w-400 text-muted">Total d'estimations</h6>
+              <h4 class="mb-3">{{ tasks|length }}</h4>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="col-md-12 col-xl-12">
+          <h5 class="mb-3">Tâches</h5>
+          <div class="card tbl-card">
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-hover table-borderless mb-0">
+                  <thead>
+                    <tr>
+                      <th>Id.</th>
+                      <th>Titre</th>
+                      <th>Localisation</th>
+                      <th>Statut</th>
+                      <th class="text-end">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for task in tasks %}
+                        <tr>
+                            <td>{{ task.id }}</td>
+                            <td>{{ task.title }}</td>
+                            <td>{{ task.location }}</td>
+                            <td>
+                                <span class="badge bg-light-primary">{{ task.status }}</span>
+                            </td>
+                            <td class="text-end">
+                                <a href="{% url 'task_detail' task.id %}" class="btn btn-outline-secondary" title="Détails">
+                                    <i class="ti ti-eye"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <div class="text-center text-muted py-3">Aucune tâche</div>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <!-- [ Main Content ] end -->
+
+{% endblock content %}

@@ -151,7 +151,7 @@ def dashboard(request):
         for t in context['technicians']:
             t.role_color = role_colors.get(t.role, '#6c757d')
 
-    return render(request, 'reports/dashboard.html', context)
+    return render(request, 'new-design/dashboard.html', context)
 
 
 
