@@ -3,7 +3,7 @@ from .import views
 from django.contrib.auth import views as auth_views
 urlpatterns = [
     path('', auth_views.LoginView.as_view(
-        template_name='reports/login.html'
+        template_name='new-design/login.html'
     ), name='login'),
 
     path('dashboard/', views.dashboard, name='dashboard'),
