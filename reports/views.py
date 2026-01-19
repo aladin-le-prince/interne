@@ -151,7 +151,7 @@ def dashboard(request):
         for t in context['technicians']:
             t.role_color = role_colors.get(t.role, '#6c757d')
 
-    return render(request, 'reports/dashboard.html', context)
+    return render(request, 'new-design/dashboard.html', context)
 
 
 
@@ -171,7 +171,7 @@ def task_list(request):
     elif status == 'active':
         tasks = tasks.exclude(status='COMPLETED')
 
-    return render(request, 'reports/task_list.html', {'tasks': tasks})
+    return render(request, 'new-design/task_list.html', {'tasks': tasks})
 
 
 @login_required
@@ -331,7 +331,7 @@ def report_list(request):
 
     paginator = Paginator(Report.objects.order_by('-created_at'), 10)
     page_obj = paginator.get_page(request.GET.get('page'))
-    return render(request, 'reports/report_list.html', {'page_obj': page_obj})
+    return render(request, 'new-design/report_list.html', {'page_obj': page_obj})
 
 
 @login_required
@@ -393,4 +393,4 @@ def audit_log_list(request):
         return HttpResponseForbidden()
 
     logs = AuditLog.objects.order_by('-timestamp')[:500]
-    return render(request, 'reports/audit_log_list.html', {'logs': logs})
+    return render(request, 'new-design/audit_log_list.html', {'logs': logs})

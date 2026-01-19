@@ -1,0 +1,133 @@
+{% load static %}
+
+
+<div class="loader-bg">
+  <div class="loader-track">
+    <div class="loader-fill"></div>
+  </div>
+</div>
+<!-- [ Pre-loader ] End -->
+ <!-- [ Sidebar Menu ] start -->
+<nav class="pc-sidebar">
+  <div class="navbar-wrapper">
+    <div class="m-header">
+      <a href="{% url "dashboard" %}" class="b-brand text-primary">
+        <!-- ========   Change your logo from here   ============ -->
+        {% comment %} <img src="{% static "images/logo-dark.svg" %}" class="img-fluid logo-lg" alt="logo"> {% endcomment %}
+        <h4>Gestion de l'équipe technique</h4>
+      </a>
+    </div>
+    <div class="navbar-content">
+      <ul class="pc-navbar">
+        <li class="pc-item">
+          <a href="{% url "dashboard" %}" class="pc-link">
+            <span class="pc-micon"><i class="ti ti-dashboard"></i></span>
+            <span class="pc-mtext">Tableau de bord</span>
+          </a>
+        </li>
+
+        <li class="pc-item pc-caption">
+          <label>Gestion</label>
+          <i class="ti ti-dashboard"></i>
+        </li>
+        <li class="pc-item">
+          <a href="{% url "task_list" %}" class="pc-link">
+            <span class="pc-micon"><i class="ti ti-clipboard"></i></span>
+            <span class="pc-mtext">Tâches</span>
+          </a>
+        </li>
+        <li class="pc-item">
+          <a href="{% url "report_list" %}" class="pc-link">
+            <span class="pc-micon"><i class="ti ti-file-text"></i></span>
+            <span class="pc-mtext">Rapports</span>
+          </a>
+        </li>
+        <li class="pc-item">
+          <a href="#" class="pc-link">
+            <span class="pc-micon"><i class="ti ti-users"></i></span>
+            <span class="pc-mtext">Techniciens</span>
+          </a>
+        </li>
+        <li class="pc-item">
+          <a href="#" class="pc-link">
+            <span class="pc-micon"><i class="ti ti-clipboard"></i></span>
+            <span class="pc-mtext">Estimations</span>
+          </a>
+        </li>
+        <li class="pc-item">
+          <a href="{% url "audit_log" %}" class="pc-link">
+            <span class="pc-micon"><i class="ti ti-activity"></i></span>
+            <span class="pc-mtext">Journal d'activités</span>
+          </a>
+        </li>
+
+      </ul>
+    </div>
+  </div>
+</nav>
+<!-- [ Sidebar Menu ] end --> <!-- [ Header Topbar ] start -->
+<header class="pc-header">
+  <div class="header-wrapper"> <!-- [Mobile Media Block] start -->
+<div class="me-auto pc-mob-drp">
+  <ul class="list-unstyled">
+    <!-- ======= Menu collapse Icon ===== -->
+    <li class="pc-h-item pc-sidebar-collapse">
+      <a href="#" class="pc-head-link ms-0" id="sidebar-hide">
+        <i class="ti ti-menu-2"></i>
+      </a>
+    </li>
+    <li class="pc-h-item pc-sidebar-popup">
+      <a href="#" class="pc-head-link ms-0" id="mobile-collapse">
+        <i class="ti ti-menu-2"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+<!-- [Mobile Media Block end] -->
+<div class="ms-auto">
+  <ul class="list-unstyled">
+    <li class="dropdown pc-h-item header-user-profile">
+      <a
+        class="pc-head-link dropdown-toggle arrow-none me-0"
+        data-bs-toggle="dropdown"
+        href="#"
+        role="button"
+        aria-haspopup="false"
+        data-bs-auto-close="outside"
+        aria-expanded="false"
+      >
+        <img src="{% static "images/user/avatar-2.jpg" %}" alt="user-image" class="user-avtar">
+        <span>
+            {{ request.user.username }}
+        </span>
+      </a>
+      <div class="dropdown-menu dropdown-user-profile dropdown-menu-end pc-h-dropdown">
+        <div class="dropdown-header">
+          <div class="d-flex mb-1">
+            <div class="flex-grow-1 ms-3">
+              <h6 class="mb-1">{{ request.user.username }}</h6>
+                {% if role == 'SUPERADMIN' %}
+                    <span class="badge bg-primary">Superviseur Admin</span>
+                {% elif role == 'SUPERVISOR' %}
+                    <span class="badge bg-danger">Centre de contrôle</span>
+                {% else %}
+                    <span class="badge bg-success">Technicien</span>
+                {% endif %}
+            </div>
+          </div>
+        </div>
+        
+        <div class="tab-content" id="mysrpTabContent">
+          <div class="tab-pane fade show active" id="drp-tab-1" role="tabpanel" aria-labelledby="drp-t1" tabindex="0">
+            <a href="{% url "logout" %}" class="dropdown-item">
+              <i class="ti ti-power text-danger"></i>
+              <span>Se déconnecter</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
+ </div>
+</header>

@@ -1,0 +1,82 @@
+{% extends "new-design/base.html" %}
+{% load static %}
+
+
+
+{% block content %}
+
+<section class="pc-container">
+      <div class="pc-content">
+        <!-- [ breadcrumb ] start -->
+        <div class="page-header">
+          <div class="page-block">
+            <div class="row align-items-center">
+              <div class="col-md-12">
+                <ul class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="{% url "dashboard" %}">Tableau de bord</a></li>
+                  <li class="breadcrumb-item"><a href="{% url "report_list" %}">Rapport</a></li>
+                  <li class="breadcrumb-item" aria-current="page">Liste</li>
+                </ul>
+              </div>
+              <div class="col-md-12">
+                <div class="page-header-title">
+                  <h2 class="mb-0">Liste de rapports</h2>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- [ breadcrumb ] end -->
+
+        <!-- [ Main Content ] start -->
+        <div class="row">
+          <!-- Zero config table start -->
+          <div class="col-sm-12">
+            <div class="card">
+              <div class="card-header">
+
+              </div>
+              <div class="card-body">
+                <div class="dt-responsive table-responsive">
+                  <table id="simpletable" class="table table-striped table-bordered nowrap">
+                    <thead>
+                      <tr>
+                        <th>Id.</th>
+                        <th>Titre</th>
+                        <th>Technicien</th>
+                        <th>Date de création</th>
+                        <th class="text-end">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        {% for report in page_obj  %}
+                            <tr>
+                                <td>{{ report.id }}</td>
+                                <td>{{ report.title }}</td>
+                                <td>{{ report.author.user.firstname }} {{ report.author.user.lastname }}</td>
+                                <td>{{ report.created_at|date:"d/m/Y H:i" }}</td>
+                                <td class="d-flex flex-wrap gap-2 ">
+                                    <a title="Voir détails" href="{% url 'report_detail' report.id %}" class="btn btn-icon btn-light-primary"><i class="ti ti-eye"></i></a>
+                                    <a title="Télécharger le PDF" href="{% url 'report_pdf' report.id %}" class="btn btn-icon btn-light-warning"><i class="ti ti-file-text"></i></a>
+                                    
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <div class="col-12">
+                                <div class="card p-3 text-center text-muted">
+                                    Aucun rapport trouvé.
+                                </div>
+                            </div>
+                        {% endfor %}
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Zero config table end -->
+        </div>
+        <!-- [ Main Content ] end -->
+      </div>
+    </section>
+
+{% endblock content %}

@@ -1,0 +1,89 @@
+{% extends "new-design/base.html" %}
+{% load static %}
+
+
+
+{% block content %}
+
+<section class="pc-container">
+      <div class="pc-content">
+        <!-- [ breadcrumb ] start -->
+        <div class="page-header">
+          <div class="page-block">
+            <div class="row align-items-center">
+              <div class="col-md-12">
+                <ul class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="{% url "dashboard" %}">Tableau de bord</a></li>
+                  <li class="breadcrumb-item"><a href="{% url "task_list" %}">Tâches</a></li>
+                  <li class="breadcrumb-item" aria-current="page">Liste</li>
+                </ul>
+              </div>
+              <div class="col-md-12">
+                <div class="page-header-title">
+                  <h2 class="mb-0">Liste de tâches</h2>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- [ breadcrumb ] end -->
+
+        <!-- [ Main Content ] start -->
+        <div class="row">
+          <!-- Zero config table start -->
+          <div class="col-sm-12">
+            <div class="card">
+              <div class="card-header">
+                {% if is_superadmin or is_supervisor %}
+                    <a href="{% url 'task_create' %}" class="btn btn-outline-primary">Créer une tâche</a>
+                {% endif %}
+
+              </div>
+              <div class="card-body">
+                <div class="dt-responsive table-responsive">
+                  <table id="simpletable" class="table table-striped table-bordered nowrap">
+                    <thead>
+                      <tr>
+                        <th>Id.</th>
+                        <th>Titre</th>
+                        <th>Localisation</th>
+                        <th>Description</th>
+                        <th>Statut</th>
+                        <th>Date de création</th>
+                        <th class="text-end">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        {% for task in tasks  %}
+                            <tr>
+                                <td>{{ task.id }}</td>
+                                <td>{{ task.title }}</td>
+                                <td>{{ task.location }}</td>
+                                <td>{{ task.description|truncatechars:80 }}</td>
+                                <td>
+                                    <span class="badge bg-light-primary">{{ task.status }}</span>
+                                </td>
+                                <td>{{ task.created_at|date:"D d M Y" }} - {{ task.created_at|time }}</td>
+                                <td class="d-flex flex-wrap gap-2 ">
+                                    <a title="Voir détails" href="{% url 'task_detail' task.id %}" class="btn btn-icon btn-light-primary"><i class="ti ti-eye"></i></a>
+                                    {% if not task.is_completed %}
+                                        <a title="Faire un rapport" href="{% url 'report_create' task.id %}" class="btn btn-icon btn-light-warning"><i class="ti ti-file-text"></i></a>
+                                    {% endif %}
+                                    {% if is_superadmin or is_supervisor %}
+                                        <a title="Faire un rapport" href="{% url 'report_create' task.id %}" class="btn btn-icon btn-light-warning"><i class="ti ti-file-text"></i></a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Zero config table end -->
+        </div>
+        <!-- [ Main Content ] end -->
+      </div>
+    </section>
+
+{% endblock content %}
