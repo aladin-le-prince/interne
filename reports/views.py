@@ -171,7 +171,7 @@ def task_list(request):
     elif status == 'active':
         tasks = tasks.exclude(status='COMPLETED')
 
-    return render(request, 'reports/task_list.html', {'tasks': tasks})
+    return render(request, 'new-design/task_list.html', {'tasks': tasks})
 
 
 @login_required

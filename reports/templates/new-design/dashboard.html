@@ -82,11 +82,9 @@
                             <td>
                                 <span class="badge bg-light-primary">{{ task.status }}</span>
                             </td>
-                            <td class="text-end">
-                                <a href="{% url 'task_detail' task.id %}" class="btn btn-outline-secondary" title="Détails">
-                                    <i class="ti ti-eye"></i>
-                                </a>
-                            </td>
+                            <td class="d-flex flex-wrap gap-2 mb-4">
+                                    <a href="{% url 'task_detail' task.id %}" class="btn btn-icon btn-light-primary"><i class="ti ti-eye"></i></a>
+                                </td>
                         </tr>
                         {% empty %}
                         <div class="text-center text-muted py-3">Aucune tâche</div>
